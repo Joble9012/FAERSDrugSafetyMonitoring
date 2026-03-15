@@ -5,7 +5,7 @@ resources:
       tasks:
         - task_key: drug_safety_monitoring_task
           notebook_task:
-            notebook_path: /Workspace/Users/joble.thomas789@gmail.com/Project/DrugSafetyMonitoring/Notebooks/PipelineOrchestrator
+            notebook_path: /Workspace/Users/joble.thomas789@gmail.com/DrugSafetyMonitoring/Notebooks/PipelineOrchestrator
           new_cluster:
             spark_version: 13.3.x-scala2.12
             node_type_id: Standard_DS3_v2

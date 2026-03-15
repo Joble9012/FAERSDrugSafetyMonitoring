@@ -8,7 +8,7 @@ bundle:
     dev: 
       mode: development 
       default: true 
+  
   include: 
     - Resources/*.yaml 
-    - Src/*
-    - Notebooks/*
+    - Src/*.yaml 
