@@ -1,0 +1,142 @@
+{
+  "datasets": [
+    {
+      "name": "09b7ea91",
+      "displayName": "drug_event_counts",
+      "queryLines": [
+        "SELECT * FROM workspace.gold.drug_event_counts"
+      ],
+      "columns": [
+        {
+          "displayName": "total_reports_all_years",
+          "description": "Aggregate num_reports by drug_name across all years to rank drugs.",
+          "expression": "SUM(num_reports) OVER (PARTITION BY drug_name)"
+        },
+        {
+          "displayName": "drug_top5_flag",
+          "description": "Flag for exactly top 5 drugs by total reports, avoiding tie issues.",
+          "expression": "ROW_NUMBER() OVER (ORDER BY SUM(num_reports) OVER (PARTITION BY drug_name) DESC) <= 5"
+        }
+      ]
+    },
+    {
+      "name": "24fd186e",
+      "displayName": "drug_patient_groups",
+      "queryLines": [
+        "SELECT * FROM workspace.gold.drug_patient_groups"
+      ]
+    },
+    {
+      "name": "9f0a8b3b",
+      "displayName": "drug_reaction_trends",
+      "queryLines": [
+        "SELECT * FROM workspace.gold.drug_reaction_trends"
+      ]
+    },
+    {
+      "name": "46403d40",
+      "displayName": "drug_severe_outcomes",
+      "queryLines": [
+        "SELECT * FROM workspace.gold.drug_severe_outcomes"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "47a810fc",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "80a32411",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "09b7ea91",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "drug_name",
+                      "expression": "`drug_name`"
+                    },
+                    {
+                      "name": "num_reports",
+                      "expression": "`num_reports`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "drug_top5_flag = TRUE"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Top 5 Drugs — Reports by Year",
+                "showTitle": true
+              },
+              "mark": {
+                "layout": "stack"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "drug_name",
+                  "displayName": "Drug Name",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "num_reports",
+                  "displayName": "Number of Reports",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "legend": {
+                    "position": "right"
+                  },
+                  "displayName": "Year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

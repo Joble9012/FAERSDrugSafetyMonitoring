@@ -1,0 +1,14 @@
+bundle: 
+  name: DrugSafetyMonitoring 
+  
+  workspace: 
+    host: https://community.cloud.databricks.com 
+  
+  targets: 
+    dev: 
+      mode: development 
+      default: true 
+  include: 
+    - Resources/*.yaml 
+    - Src/*
+    - Notebooks/*
