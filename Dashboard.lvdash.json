@@ -1,43 +1,38 @@
 {
   "datasets": [
     {
-      "name": "09b7ea91",
-      "displayName": "drug_event_counts",
+      "name": "17a7adfc",
+      "displayName": "drug_event_counts_top5",
       "queryLines": [
-        "SELECT * FROM workspace.gold.drug_event_counts"
-      ],
-      "columns": [
-        {
-          "displayName": "total_reports_all_years",
-          "description": "Aggregate num_reports by drug_name across all years to rank drugs.",
-          "expression": "SUM(num_reports) OVER (PARTITION BY drug_name)"
-        },
-        {
-          "displayName": "drug_top5_flag",
-          "description": "Flag for exactly top 5 drugs by total reports, avoiding tie issues.",
-          "expression": "ROW_NUMBER() OVER (ORDER BY SUM(num_reports) OVER (PARTITION BY drug_name) DESC) <= 5"
-        }
+        "SELECT * FROM workspace.gold.drug_event_counts_top5"
       ]
     },
     {
-      "name": "24fd186e",
-      "displayName": "drug_patient_groups",
+      "name": "55c59bd9",
+      "displayName": "top5_drug_severe_outcomes",
       "queryLines": [
-        "SELECT * FROM workspace.gold.drug_patient_groups"
+        "SELECT * FROM workspace.gold.top5_drug_severe_outcomes"
       ]
     },
     {
-      "name": "9f0a8b3b",
-      "displayName": "drug_reaction_trends",
+      "name": "ff1c29e5",
+      "displayName": "top5_drug_reaction_trends",
       "queryLines": [
-        "SELECT * FROM workspace.gold.drug_reaction_trends"
+        "SELECT * FROM workspace.gold.top5_drug_reaction_trends"
       ]
     },
     {
-      "name": "46403d40",
-      "displayName": "drug_severe_outcomes",
+      "name": "f301a1f2",
+      "displayName": "top5_drug_gender",
       "queryLines": [
-        "SELECT * FROM workspace.gold.drug_severe_outcomes"
+        "SELECT * FROM workspace.gold.top5_drug_gender"
+      ]
+    },
+    {
+      "name": "b7fdf258",
+      "displayName": "top5_drug_age_groups",
+      "queryLines": [
+        "SELECT * FROM workspace.gold.top5_drug_age_groups"
       ]
     }
   ],
@@ -48,12 +43,12 @@
       "layout": [
         {
           "widget": {
-            "name": "b1bc7cfe",
+            "name": "8b1d1c56",
             "queries": [
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "09b7ea91",
+                  "datasetName": "17a7adfc",
                   "fields": [
                     {
                       "name": "drug_name",
@@ -68,18 +63,13 @@
                       "expression": "SUM(`num_reports`)"
                     }
                   ],
-                  "filters": [
-                    {
-                      "expression": "`drug_name` IN (`drug_name`) OR TRUE"
-                    }
-                  ],
                   "disaggregated": false
                 }
               }
             ],
             "spec": {
               "version": 3,
-              "widgetType": "line",
+              "widgetType": "bar",
               "encodings": {
                 "x": {
                   "fieldName": "year",
@@ -103,8 +93,233 @@
             }
           },
           "position": {
-            "x": 0,
+            "x": 1,
             "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "99d854f1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ff1c29e5",
+                  "fields": [
+                    {
+                      "name": "drug_name",
+                      "expression": "`drug_name`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "num_reports",
+                      "expression": "`num_reports`"
+                    },
+                    {
+                      "name": "preferred_term_for_event",
+                      "expression": "`preferred_term_for_event`"
+                    },
+                    {
+                      "name": "rank",
+                      "expression": "`rank`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "drug_name"
+                  },
+                  {
+                    "fieldName": "year"
+                  },
+                  {
+                    "fieldName": "num_reports"
+                  },
+                  {
+                    "fieldName": "preferred_term_for_event"
+                  },
+                  {
+                    "fieldName": "rank"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 6,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "aa31d68c",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "55c59bd9",
+                  "fields": [
+                    {
+                      "name": "num_reports",
+                      "expression": "`num_reports`"
+                    },
+                    {
+                      "name": "drug_name",
+                      "expression": "`drug_name`"
+                    },
+                    {
+                      "name": "patient_outcome",
+                      "expression": "`patient_outcome`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "num_reports"
+                  },
+                  {
+                    "fieldName": "drug_name"
+                  },
+                  {
+                    "fieldName": "patient_outcome"
+                  },
+                  {
+                    "fieldName": "year"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 12,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "7b1316a6",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f301a1f2",
+                  "fields": [
+                    {
+                      "name": "num_reports",
+                      "expression": "`num_reports`"
+                    },
+                    {
+                      "name": "drug_name",
+                      "expression": "`drug_name`"
+                    },
+                    {
+                      "name": "gender_of_patient",
+                      "expression": "`gender_of_patient`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "num_reports"
+                  },
+                  {
+                    "fieldName": "drug_name"
+                  },
+                  {
+                    "fieldName": "gender_of_patient"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 18,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "359c25de",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b7fdf258",
+                  "fields": [
+                    {
+                      "name": "num_reports",
+                      "expression": "`num_reports`"
+                    },
+                    {
+                      "name": "age_group",
+                      "expression": "`age_group`"
+                    },
+                    {
+                      "name": "drug_name",
+                      "expression": "`drug_name`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "num_reports"
+                  },
+                  {
+                    "fieldName": "age_group"
+                  },
+                  {
+                    "fieldName": "drug_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 24,
             "width": 6,
             "height": 6
           }
