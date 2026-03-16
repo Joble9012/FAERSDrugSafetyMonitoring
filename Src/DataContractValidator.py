@@ -1,5 +1,5 @@
 import yaml
-from pyspark.sql.functions import col
+from pyspark.sql.functions import col, sum as _sum
 
 # ===============================
 # Load YAML contract
@@ -34,32 +34,18 @@ def validate_table_contract(df, table_name: str, contract: dict):
         if not col_contract.get("nullable", True):
             null_count = df.filter(col(col_name).isNull()).limit(1).count()
             if null_count > 0:
-                raise Exception(
-                    f"[{table_name}] Null values found in non-nullable column: {col_name}"
-                )
+                raise Exception(f"[{table_name}] Null values found in non-nullable column: {col_name}")
         
         # Allowed values check
         allowed_values = col_contract.get("allowed_values")
         if allowed_values:
-            invalid_count = (
-                df.filter(~col(col_name).isin(allowed_values) & col(col_name).isNotNull())
-                  .limit(1)
-                  .count()
-            )
+            invalid_count = df.filter(~col(col_name).isin(allowed_values) & col(col_name).isNotNull()).limit(1).count()
             if invalid_count > 0:
-                raise Exception(
-                    f"[{table_name}] Invalid values found in column {col_name}"
-                )
+                raise Exception(f"[{table_name}] Invalid values found in column {col_name}")
     
-    # Duplicate checks (example only for demographics)
+    # Duplicate check for demographics
     if table_name == "demographics":
-        duplicate_count = (
-            df.groupBy("primary_id")
-              .count()
-              .filter(col("count") > 1)
-              .limit(1)
-              .count()
-        )
+        duplicate_count = df.groupBy("primary_id").count().filter(col("count") > 1).limit(1).count()
         if duplicate_count > 0:
             raise Exception(f"[{table_name}] Duplicate primary_id values detected")
     

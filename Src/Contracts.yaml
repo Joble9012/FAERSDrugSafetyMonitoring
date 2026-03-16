@@ -9,12 +9,11 @@ tables:
         type: string
         nullable: false
       - name: year
-        type: int
+        type: string
         nullable: false
       - name: age_group
         type: string
         nullable: true
-        allowed_values: ["A", "C", "E", "I", "N", "T"]
       - name: gender_of_patient
         type: string
         nullable: true
@@ -24,12 +23,12 @@ tables:
     columns:
       - name: primary_id
         type: string
-        nullable: true
+        nullable: false
       - name: case_id
         type: string
         nullable: false
       - name: year
-        type: int
+        type: string
         nullable: false
       - name: drug_name
         type: string
@@ -40,12 +39,12 @@ tables:
     columns:
       - name: primary_id
         type: string
-        nullable: true
+        nullable: false
       - name: case_id
         type: string
         nullable: false
       - name: year
-        type: int
+        type: string
         nullable: false
       - name: preferred_term_for_event
         type: string
@@ -56,14 +55,13 @@ tables:
     columns:
       - name: primary_id
         type: string
-        nullable: true
+        nullable: false
       - name: case_id
         type: string
         nullable: false
       - name: year
-        type: int
+        type: string
         nullable: false
       - name: patient_outcome
         type: string
         nullable: true
-        allowed_values: ["DE", "HO", "LT", "DS", "CA", "RI", "OT"]
