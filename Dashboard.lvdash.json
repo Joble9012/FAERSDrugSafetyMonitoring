@@ -11,7 +11,7 @@
       "name": "ddf4be6e",
       "displayName": "top5_drug_severe_outcomes",
       "queryLines": [
-        "SELECT * FROM workspace.gold.top5_drug_severe_outcomes"
+        "SELECT * FROM workspace.gold.top5_drug_severe_outcomes;\r\n"
       ]
     },
     {
@@ -89,7 +89,7 @@
             "x": 0,
             "y": 1,
             "width": 4,
-            "height": 4
+            "height": 5
           }
         },
         {
@@ -209,7 +209,7 @@
           "position": {
             "x": 4,
             "y": 1,
-            "width": 4,
+            "width": 5,
             "height": 1
           }
         },
@@ -223,12 +223,12 @@
                   "datasetName": "114a53af",
                   "fields": [
                     {
-                      "name": "sum(num_reports)",
-                      "expression": "SUM(`num_reports`)"
-                    },
-                    {
                       "name": "preferred_term_for_event",
                       "expression": "`preferred_term_for_event`"
+                    },
+                    {
+                      "name": "sum(num_reports)",
+                      "expression": "SUM(`num_reports`)"
                     }
                   ],
                   "disaggregated": false
@@ -239,14 +239,14 @@
               "version": 3,
               "frame": {
                 "showTitle": true,
-                "title": "Count of Type of Reaction"
+                "title": "Drug Reaction Report Count",
+                "headerAlignment": "left",
+                "showDescription": true,
+                "description": "(Scroll to side to see rest of the chart)"
               },
               "mark": {
                 "colors": [
-                  {
-                    "themeColorType": "visualizationColors",
-                    "position": 6
-                  },
+                  "#952337",
                   {
                     "themeColorType": "visualizationColors",
                     "position": 2
@@ -288,29 +288,43 @@
               "widgetType": "bar",
               "encodings": {
                 "x": {
-                  "fieldName": "sum(num_reports)",
-                  "axis": {
-                    "title": "Report Count"
-                  },
-                  "scale": {
-                    "type": "quantitative"
-                  }
-                },
-                "y": {
                   "fieldName": "preferred_term_for_event",
                   "axis": {
-                    "title": "Reaction Name"
+                    "title": "Reaction Name",
+                    "labelAngle": 0
                   },
                   "scale": {
                     "type": "categorical",
                     "categorySize": {
                       "type": "number-of-categories",
-                      "number": 10
+                      "number": 2
                     },
                     "sort": {
-                      "by": "x-reversed"
+                      "by": "y-reversed"
                     }
                   }
+                },
+                "y": {
+                  "fieldName": "sum(num_reports)",
+                  "axis": {
+                    "title": "Report Count",
+                    "hideLabels": false,
+                    "hideGrid": false
+                  },
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
                 }
               }
             }
@@ -318,7 +332,7 @@
           "position": {
             "x": 4,
             "y": 2,
-            "width": 6,
+            "width": 8,
             "height": 6
           }
         },
@@ -332,15 +346,15 @@
                   "datasetName": "ddf4be6e",
                   "fields": [
                     {
-                      "name": "num_reports",
-                      "expression": "`num_reports`"
+                      "name": "sum(num_reports)",
+                      "expression": "SUM(`num_reports`)"
                     },
                     {
-                      "name": "patient_outcome",
-                      "expression": "`patient_outcome`"
+                      "name": "outcome_cleaned",
+                      "expression": "`outcome_cleaned`"
                     }
                   ],
-                  "disaggregated": true
+                  "disaggregated": false
                 }
               }
             ],
@@ -353,14 +367,14 @@
               "widgetType": "heatmap",
               "encodings": {
                 "y": {
-                  "fieldName": "patient_outcome",
-                  "displayName": "Drug Name",
+                  "fieldName": "outcome_cleaned",
+                  "displayName": "Outcome",
                   "scale": {
                     "type": "categorical"
                   }
                 },
                 "color": {
-                  "fieldName": "num_reports",
+                  "fieldName": "sum(num_reports)",
                   "legend": {
                     "position": "right"
                   },
@@ -368,8 +382,14 @@
                   "scale": {
                     "type": "quantitative",
                     "colorRamp": {
-                      "mode": "scheme",
-                      "scheme": "reds"
+                      "mode": "custom-sequential",
+                      "colors": {
+                        "start": "#F4FF00",
+                        "end": "#FF0A00"
+                      }
+                    },
+                    "domain": {
+                      "min": 0
                     }
                   }
                 }
@@ -379,7 +399,7 @@
           "position": {
             "x": 4,
             "y": 8,
-            "width": 6,
+            "width": 8,
             "height": 3
           }
         },
@@ -388,14 +408,14 @@
             "name": "d1793853",
             "multilineTextboxSpec": {
               "lines": [
-                "<span style=\"text-align:center;display:block\"><span style=\"font-size:24px\">Top 5 Drug Adverse Events Overview</span></span>"
+                "<span style=\"text-align:center;display:block\"><span style=\"font-size:24px\">Top 5 Reported Drug Adverse Events Overview</span></span>"
               ]
             }
           },
           "position": {
             "x": 0,
             "y": 0,
-            "width": 10,
+            "width": 12,
             "height": 1
           }
         },
@@ -481,14 +501,14 @@
             },
             "specExtensions": {
               "widgetBackgroundColor": {
-                "dark": "#7D2A32"
+                "dark": "#952337"
               }
             }
           },
           "position": {
-            "x": 8,
+            "x": 9,
             "y": 1,
-            "width": 2,
+            "width": 3,
             "height": 1
           }
         },
@@ -520,6 +540,10 @@
                     {
                       "name": "F",
                       "expression": "`F`"
+                    },
+                    {
+                      "name": "Unknown",
+                      "expression": "`Unknown`"
                     }
                   ],
                   "disaggregated": true
@@ -543,6 +567,7 @@
                   {
                     "fieldName": "year",
                     "contentAlignment": "left",
+                    "columnWidth": 5,
                     "displayName": "Year"
                   },
                   {
@@ -558,15 +583,19 @@
                     "fieldName": "F",
                     "contentAlignment": "left",
                     "displayName": "Female Count"
+                  },
+                  {
+                    "fieldName": "Unknown",
+                    "contentAlignment": "left"
                   }
                 ]
               }
             }
           },
           "position": {
-            "x": 1,
+            "x": 0,
             "y": 11,
-            "width": 8,
+            "width": 12,
             "height": 6
           }
         },
@@ -596,14 +625,11 @@
               "version": 3,
               "frame": {
                 "showTitle": true,
-                "title": "Year Distribution of Drug Report Count"
+                "title": "Yearly Drug Report Count"
               },
               "mark": {
                 "colors": [
-                  {
-                    "themeColorType": "visualizationColors",
-                    "position": 6
-                  },
+                  "#952337",
                   {
                     "themeColorType": "visualizationColors",
                     "position": 2
@@ -663,9 +689,9 @@
           },
           "position": {
             "x": 0,
-            "y": 5,
+            "y": 6,
             "width": 4,
-            "height": 6
+            "height": 5
           }
         }
       ],

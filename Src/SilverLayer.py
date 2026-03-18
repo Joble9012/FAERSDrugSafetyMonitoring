@@ -43,11 +43,11 @@ def create_silver_tables(Demographics, Drug, Reaction, Outcome):
         .withColumn(
             "drug_name",
             F.when(F.col("drug_name").isNull(), "UNKNOWN DRUG")
-            .otherwise(F.upper(F.col("drug_name")))
+            .otherwise(F.initcap(F.col("drug_name")))
         )
         .withColumn(
             "product_active_ingredient",
-            F.upper(F.col("product_active_ingredient"))
+            F.initcap(F.col("product_active_ingredient"))
         )
         .dropDuplicates(["primary_id", "drug_sequence_number", "year"])
     )
@@ -64,7 +64,12 @@ def create_silver_tables(Demographics, Drug, Reaction, Outcome):
         )
         .withColumn(
             "preferred_term_for_event",
-            F.upper(F.col("preferred_term_for_event"))
+            F.initcap(
+                F.coalesce(
+                    F.col("preferred_term_for_event"),
+                    F.lit("Unknown")
+                )
+            )
         )
         .dropDuplicates(["primary_id", "preferred_term_for_event", "year"])
     )
@@ -79,7 +84,18 @@ def create_silver_tables(Demographics, Drug, Reaction, Outcome):
             F.when(F.col("primary_id").isNull(), F.monotonically_increasing_id())
             .otherwise(F.col("primary_id"))
         )
-        .dropDuplicates(["primary_id", "patient_outcome", "year"])
+        .withColumn(
+            "outcome_cleaned",
+            F.when(F.col("patient_outcome") == "DE", "Death")
+            .when(F.col("patient_outcome") == "CA", "Congenital Anomaly")
+            .when(F.col("patient_outcome") == "DS", "Disability")
+            .when(F.col("patient_outcome").isin("HO", "Hospitalization - Initial or Prolonged"), "Hospitalization")
+            .when(F.col("patient_outcome") == "LT", "Life-Threatening")
+            .when(F.col("patient_outcome").isin("OT", "Other Serious (Important Medical Event)"), "Other Serious Event")
+            .when(F.col("patient_outcome").isin("RI", "Required Intervention to Prevent Permanent Impairment/Damage"), "Required Intervention")
+            .otherwise("Unknown")  # ✅ handles both nulls and unmapped codes
+        )
+        .dropDuplicates(["primary_id", "outcome_cleaned", "year"])
     )
 
     return {
