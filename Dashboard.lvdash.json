@@ -22,35 +22,28 @@
       ]
     },
     {
-      "name": "2e7bf515",
-      "displayName": "top5_drug_gender",
-      "queryLines": [
-        "SELECT * FROM workspace.gold.top5_drug_gender"
-      ]
-    },
-    {
-      "name": "c588c0b2",
-      "displayName": "top5_drug_age_groups",
-      "queryLines": [
-        "SELECT * FROM workspace.gold.top5_drug_age_groups"
-      ]
-    },
-    {
       "name": "b9376607",
       "displayName": "drug_event_counts_top5",
       "queryLines": [
         "SELECT * FROM workspace.gold.drug_event_counts_top5"
+      ]
+    },
+    {
+      "name": "d54508da",
+      "displayName": "top5_drug_age_gender",
+      "queryLines": [
+        "SELECT * FROM workspace.gold.top5_drug_age_gender"
       ]
     }
   ],
   "pages": [
     {
       "name": "47a810fc",
-      "displayName": "Untitled page",
+      "displayName": "Dashboard",
       "layout": [
         {
           "widget": {
-            "name": "afc94698",
+            "name": "top-5-drug-report-count-combined-years-c",
             "queries": [
               {
                 "name": "main_query",
@@ -72,95 +65,37 @@
             ],
             "spec": {
               "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Top 5 Drug Report Count"
+              },
               "widgetType": "table",
               "encodings": {
                 "columns": [
                   {
-                    "fieldName": "drug_name"
+                    "fieldName": "drug_name",
+                    "displayName": "Drug Name"
                   },
                   {
-                    "fieldName": "num_reports"
+                    "fieldName": "num_reports",
+                    "contentAlignment": "left",
+                    "displayName": "Report Count"
                   }
                 ]
               }
             }
           },
           "position": {
-            "x": 4,
-            "y": 0,
-            "width": 6,
+            "x": 0,
+            "y": 1,
+            "width": 4,
             "height": 4
           }
         },
         {
           "widget": {
-            "name": "9aab8b53",
+            "name": "select-1-drug-name",
             "queries": [
-              {
-                "name": "main_query",
-                "query": {
-                  "datasetName": "b9376607",
-                  "fields": [
-                    {
-                      "name": "year",
-                      "expression": "`year`"
-                    },
-                    {
-                      "name": "num_reports",
-                      "expression": "`num_reports`"
-                    }
-                  ],
-                  "disaggregated": true
-                }
-              }
-            ],
-            "spec": {
-              "version": 3,
-              "widgetType": "bar",
-              "encodings": {
-                "x": {
-                  "fieldName": "year",
-                  "scale": {
-                    "type": "categorical"
-                  }
-                },
-                "y": {
-                  "fieldName": "num_reports",
-                  "scale": {
-                    "type": "quantitative"
-                  }
-                }
-              }
-            }
-          },
-          "position": {
-            "x": 0,
-            "y": 4,
-            "width": 6,
-            "height": 6
-          }
-        },
-        {
-          "widget": {
-            "name": "776496e7",
-            "queries": [
-              {
-                "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216565e615a0aaa765d357fd426a_drug_name",
-                "query": {
-                  "datasetName": "cc5c0885",
-                  "fields": [
-                    {
-                      "name": "drug_name",
-                      "expression": "`drug_name`"
-                    },
-                    {
-                      "name": "drug_name_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              },
               {
                 "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216568721728aef1a6ab4da64c5f_drug_name",
                 "query": {
@@ -213,26 +148,9 @@
                 }
               },
               {
-                "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216567491e8d84cf5a9b7d020c4e_drug_name",
+                "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1223f7cd818eca889b3c9fe79dbe1_drug_name",
                 "query": {
-                  "datasetName": "2e7bf515",
-                  "fields": [
-                    {
-                      "name": "drug_name",
-                      "expression": "`drug_name`"
-                    },
-                    {
-                      "name": "drug_name_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              },
-              {
-                "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216567ec1e939f78520e03b0bf59_drug_name",
-                "query": {
-                  "datasetName": "c588c0b2",
+                  "datasetName": "d54508da",
                   "fields": [
                     {
                       "name": "drug_name",
@@ -250,15 +168,19 @@
             "spec": {
               "version": 2,
               "frame": {
-                "showTitle": true
+                "showTitle": true,
+                "title": "Drug Name",
+                "headerAlignment": "left"
+              },
+              "scale": {
+                "type": "categorical",
+                "sort": {
+                  "by": "natural-order"
+                }
               },
               "widgetType": "filter-single-select",
               "encodings": {
                 "fields": [
-                  {
-                    "fieldName": "drug_name",
-                    "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216565e615a0aaa765d357fd426a_drug_name"
-                  },
                   {
                     "fieldName": "drug_name",
                     "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216568721728aef1a6ab4da64c5f_drug_name"
@@ -273,26 +195,27 @@
                   },
                   {
                     "fieldName": "drug_name",
-                    "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216567491e8d84cf5a9b7d020c4e_drug_name"
-                  },
-                  {
-                    "fieldName": "drug_name",
-                    "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216567ec1e939f78520e03b0bf59_drug_name"
+                    "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1223f7cd818eca889b3c9fe79dbe1_drug_name"
                   }
                 ]
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "dark": "#952337"
               }
             }
           },
           "position": {
-            "x": 0,
-            "y": 0,
+            "x": 4,
+            "y": 1,
             "width": 4,
-            "height": 2
+            "height": 1
           }
         },
         {
           "widget": {
-            "name": "4b6c51e7",
+            "name": "top-10",
             "queries": [
               {
                 "name": "main_query",
@@ -300,50 +223,101 @@
                   "datasetName": "114a53af",
                   "fields": [
                     {
-                      "name": "drug_name",
-                      "expression": "`drug_name`"
-                    },
-                    {
-                      "name": "year",
-                      "expression": "`year`"
-                    },
-                    {
-                      "name": "num_reports",
-                      "expression": "`num_reports`"
+                      "name": "sum(num_reports)",
+                      "expression": "SUM(`num_reports`)"
                     },
                     {
                       "name": "preferred_term_for_event",
                       "expression": "`preferred_term_for_event`"
                     }
                   ],
-                  "disaggregated": true
+                  "disaggregated": false
                 }
               }
             ],
             "spec": {
-              "version": 2,
-              "widgetType": "table",
-              "encodings": {
-                "columns": [
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Count of Type of Reaction"
+              },
+              "mark": {
+                "colors": [
                   {
-                    "fieldName": "drug_name"
+                    "themeColorType": "visualizationColors",
+                    "position": 6
                   },
                   {
-                    "fieldName": "year"
+                    "themeColorType": "visualizationColors",
+                    "position": 2
                   },
                   {
-                    "fieldName": "num_reports"
+                    "themeColorType": "visualizationColors",
+                    "position": 3
                   },
                   {
-                    "fieldName": "preferred_term_for_event"
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
                   }
                 ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(num_reports)",
+                  "axis": {
+                    "title": "Report Count"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "preferred_term_for_event",
+                  "axis": {
+                    "title": "Reaction Name"
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "categorySize": {
+                      "type": "number-of-categories",
+                      "number": 10
+                    },
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                }
               }
             }
           },
           "position": {
-            "x": 6,
-            "y": 4,
+            "x": 4,
+            "y": 2,
             "width": 6,
             "height": 6
           }
@@ -358,14 +332,6 @@
                   "datasetName": "ddf4be6e",
                   "fields": [
                     {
-                      "name": "drug_name",
-                      "expression": "`drug_name`"
-                    },
-                    {
-                      "name": "year",
-                      "expression": "`year`"
-                    },
-                    {
                       "name": "num_reports",
                       "expression": "`num_reports`"
                     },
@@ -379,104 +345,181 @@
               }
             ],
             "spec": {
-              "version": 2,
-              "widgetType": "table",
+              "version": 3,
+              "frame": {
+                "title": "Serious Outcome Distribution",
+                "showTitle": true
+              },
+              "widgetType": "heatmap",
               "encodings": {
-                "columns": [
-                  {
-                    "fieldName": "drug_name"
-                  },
-                  {
-                    "fieldName": "year"
-                  },
-                  {
-                    "fieldName": "num_reports"
-                  },
-                  {
-                    "fieldName": "patient_outcome"
+                "y": {
+                  "fieldName": "patient_outcome",
+                  "displayName": "Drug Name",
+                  "scale": {
+                    "type": "categorical"
                   }
-                ]
+                },
+                "color": {
+                  "fieldName": "num_reports",
+                  "legend": {
+                    "position": "right"
+                  },
+                  "displayName": "Report Count",
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "reds"
+                    }
+                  }
+                }
               }
             }
           },
           "position": {
-            "x": 0,
-            "y": 10,
-            "width": 9,
-            "height": 6
+            "x": 4,
+            "y": 8,
+            "width": 6,
+            "height": 3
           }
         },
         {
           "widget": {
-            "name": "4321d49e",
+            "name": "d1793853",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block\"><span style=\"font-size:24px\">Top 5 Drug Adverse Events Overview</span></span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 10,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "year",
             "queries": [
               {
-                "name": "main_query",
+                "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216566c31bcc9ee125741679e6fa_year",
                 "query": {
-                  "datasetName": "2e7bf515",
+                  "datasetName": "114a53af",
                   "fields": [
                     {
-                      "name": "drug_name",
-                      "expression": "`drug_name`"
+                      "name": "year",
+                      "expression": "`year`"
                     },
                     {
-                      "name": "gender_of_patient",
-                      "expression": "`gender_of_patient`"
-                    },
-                    {
-                      "name": "num_reports",
-                      "expression": "`num_reports`"
+                      "name": "year_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
                     }
                   ],
-                  "disaggregated": true
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f12165664b1536b720639d8e29ff5e_year",
+                "query": {
+                  "datasetName": "ddf4be6e",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "year_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1223f7cd818eca889b3c9fe79dbe1_year",
+                "query": {
+                  "datasetName": "d54508da",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "year_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
                 }
               }
             ],
             "spec": {
               "version": 2,
-              "widgetType": "table",
+              "frame": {
+                "showTitle": true,
+                "title": "Year"
+              },
+              "widgetType": "filter-single-select",
               "encodings": {
-                "columns": [
+                "fields": [
                   {
-                    "fieldName": "drug_name"
+                    "fieldName": "year",
+                    "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1216566c31bcc9ee125741679e6fa_year"
                   },
                   {
-                    "fieldName": "gender_of_patient"
+                    "fieldName": "year",
+                    "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f12165664b1536b720639d8e29ff5e_year"
                   },
                   {
-                    "fieldName": "num_reports"
+                    "fieldName": "year",
+                    "queryName": "dashboards/01f12006f4781b53b7530a7c639f907a/datasets/01f1223f7cd818eca889b3c9fe79dbe1_year"
                   }
                 ]
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "dark": "#7D2A32"
               }
             }
           },
           "position": {
-            "x": 0,
-            "y": 16,
-            "width": 6,
-            "height": 6
+            "x": 8,
+            "y": 1,
+            "width": 2,
+            "height": 1
           }
         },
         {
           "widget": {
-            "name": "67793e28",
+            "name": "demographic-distribution",
             "queries": [
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "c588c0b2",
+                  "datasetName": "d54508da",
                   "fields": [
                     {
                       "name": "drug_name",
                       "expression": "`drug_name`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
                     },
                     {
                       "name": "age_group_readable",
                       "expression": "`age_group_readable`"
                     },
                     {
-                      "name": "num_reports",
-                      "expression": "`num_reports`"
+                      "name": "M",
+                      "expression": "`M`"
+                    },
+                    {
+                      "name": "F",
+                      "expression": "`F`"
                     }
                   ],
                   "disaggregated": true
@@ -485,26 +528,143 @@
             ],
             "spec": {
               "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Demographic Distribution "
+              },
               "widgetType": "table",
               "encodings": {
                 "columns": [
                   {
-                    "fieldName": "drug_name"
+                    "fieldName": "drug_name",
+                    "contentAlignment": "left",
+                    "displayName": "Drug Name"
                   },
                   {
-                    "fieldName": "age_group_readable"
+                    "fieldName": "year",
+                    "contentAlignment": "left",
+                    "displayName": "Year"
                   },
                   {
-                    "fieldName": "num_reports"
+                    "fieldName": "age_group_readable",
+                    "displayName": "Age Group"
+                  },
+                  {
+                    "fieldName": "M",
+                    "contentAlignment": "left",
+                    "displayName": "Male Count"
+                  },
+                  {
+                    "fieldName": "F",
+                    "contentAlignment": "left",
+                    "displayName": "Female Count"
                   }
                 ]
               }
             }
           },
           "position": {
-            "x": 6,
-            "y": 16,
-            "width": 6,
+            "x": 1,
+            "y": 11,
+            "width": 8,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "year-distribution-drug-report-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b9376607",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "sum(num_reports)",
+                      "expression": "SUM(`num_reports`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Year Distribution of Drug Report Count"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "Year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(num_reports)",
+                  "displayName": "Report Count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 4,
             "height": 6
           }
         }
